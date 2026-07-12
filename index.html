@@ -136,14 +136,14 @@
     border-radius: .22em;
     box-shadow: 0 3px 8px -3px rgba(111, 69, 41, .35);
   }
-  .tiles .word i:nth-child(odd)  { background: #f2dfae; color: #9c7433; transform: rotate(-2.5deg); }
-  .tiles .word i:nth-child(even) { background: #f0cdb8; color: #a96844; transform: rotate(2deg); }
+  .tiles .word i:nth-child(odd)  { background: #f0cdb8; color: #a96844; transform: rotate(-2.5deg); }
+  .tiles .word i:nth-child(even) { background: #cfe1ee; color: #567f9b; transform: rotate(2deg); }
 
   .gate .gate-sub {
     font-size: .68rem;
     letter-spacing: .4em;
     text-transform: uppercase;
-    color: var(--ink-soft);
+    color: #6f94ad;
     margin-bottom: 2.6rem;
   }
 
@@ -484,9 +484,9 @@
 <!-- ═══════════════ ENVELOPE GATE ═══════════════ -->
 <div class="gate" id="gate">
   <svg class="gate-decor twinkle" style="--dur:4s; top:12%; left:12%; width:20px" viewBox="0 0 24 24" aria-hidden="true"><path fill="#c9a24f" d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12C7 11 11 7 12 0Z"/></svg>
-  <svg class="gate-decor twinkle" style="--dur:5s; top:18%; right:10%; width:15px" viewBox="0 0 24 24" aria-hidden="true"><path fill="#d8a88e" d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12C7 11 11 7 12 0Z"/></svg>
+  <svg class="gate-decor twinkle" style="--dur:5s; top:18%; right:10%; width:15px" viewBox="0 0 24 24" aria-hidden="true"><path fill="#a9c6db" d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12C7 11 11 7 12 0Z"/></svg>
   <svg class="gate-decor drift" style="--dur:28s; --sway:14px; bottom:12%; left:4%; width:34vw; max-width:200px; opacity:.6" viewBox="0 0 200 70" aria-hidden="true"><g fill="#f3e8ce"><ellipse cx="60" cy="48" rx="52" ry="20"/><ellipse cx="110" cy="38" rx="42" ry="22"/><ellipse cx="150" cy="50" rx="44" ry="17"/></g></svg>
-  <svg class="gate-decor twinkle" style="--dur:4.5s; bottom:22%; right:12%; width:17px" viewBox="0 0 24 24" aria-hidden="true"><path fill="#c9a24f" d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12C7 11 11 7 12 0Z"/></svg>
+  <svg class="gate-decor twinkle" style="--dur:4.5s; bottom:22%; right:12%; width:17px" viewBox="0 0 24 24" aria-hidden="true"><path fill="#d8a88e" d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12C7 11 11 7 12 0Z"/></svg>
 
   <p class="script welcome">welcome to</p>
 
@@ -580,7 +580,7 @@
           <span class="caps">Our Home<br>Congo Town<br>Back Road</span>
         </div>
       </div>
-      <p class="note">Come hungry and ready to celebrate — we'd be beary happy to have you.</p>
+      <p class="note">Come ready to celebrate — we'd be beary happy to have you.</p>
     </div>
   </section>
 
@@ -612,6 +612,7 @@
       <h2>RSVP</h2>
       <hr class="rule">
       <p class="note" style="margin-top:0">Please let us know if you'll be joining us by <strong>August 10th</strong>.</p>
+      <p class="note" style="margin-top:.6rem; font-style:italic">A little note: to keep our gathering cozy, this invitation is just for you. 🤎</p>
 
       <form id="rsvpForm" novalidate>
         <div class="field">
@@ -629,10 +630,8 @@
           </div>
         </div>
 
-        <div class="field">
-          <label for="f-guests">How many people (including you)?</label>
-          <input type="number" id="f-guests" name="guests" min="1" max="12" value="1" required>
-        </div>
+        <!-- invitations are individual — every RSVP is a party of one -->
+        <input type="hidden" name="guests" value="1">
 
         <div class="field">
           <label for="f-note">A note for the parents <span style="opacity:.55">(optional)</span></label>
@@ -748,7 +747,7 @@
     } else {
       // No backend configured yet — open the guest's email app pre-filled
       const f = new FormData(form);
-      const body = `Name: ${f.get('name')}\nAttending: ${f.get('attending')}\nParty size: ${f.get('guests')}\nNote: ${f.get('note') || '—'}`;
+      const body = `Name: ${f.get('name')}\nAttending: ${f.get('attending')}\nNote: ${f.get('note') || '—'}`;
       location.href = `mailto:${RSVP_FALLBACK_EMAIL}?subject=${encodeURIComponent('Baby Shower RSVP — ' + f.get('name'))}&body=${encodeURIComponent(body)}`;
       statusEl.style.display = 'block';
       statusEl.textContent = 'Your email app should open with your RSVP ready to send.';
