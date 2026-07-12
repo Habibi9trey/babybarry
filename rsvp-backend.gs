@@ -6,7 +6,8 @@
  * Full setup steps are in README.md.
  */
 
-const NOTIFY_EMAIL = 'habibi93.ab@gmail.com';   // where RSVP notifications go
+// Comma-separate to notify several people, e.g. 'you@gmail.com,partner@gmail.com'
+const NOTIFY_EMAIL = 'habibi93.ab@gmail.com';
 const SHEET_NAME = 'RSVPs';
 
 function doPost(e) {
