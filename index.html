@@ -134,7 +134,7 @@
     padding: .42em 0 .34em;
     text-align: center;
     border-radius: .22em;
-    box-shadow: 0 3px 8px -3px rgba(111, 69, 41, .35);
+    box-shadow: 0 2px 5px -2px rgba(111, 69, 41, .25);
   }
   .tiles .word i:nth-child(odd)  { background: #f0cdb8; color: #a96844; transform: rotate(-2.5deg); }
   .tiles .word i:nth-child(even) { background: #cfe1ee; color: #567f9b; transform: rotate(2deg); }
@@ -479,7 +479,22 @@
     width: var(--w, 100%);
     margin-top: var(--mt, 1.6rem);
   }
-  .piece.card { padding: 1.8rem 1.4rem 1.7rem; border-radius: 16px; }
+  .piece.card {
+    position: relative;
+    padding: 2.3rem 1.6rem 2.1rem;
+    border-radius: 14px;
+    border-color: rgba(201, 162, 79, .22);
+    box-shadow: 0 16px 36px -20px rgba(111, 69, 41, .28);
+  }
+  /* hairline inner frame — stationery elegance */
+  .piece.card::before {
+    content: '';
+    position: absolute;
+    inset: 7px;
+    border: 1px solid rgba(201, 162, 79, .32);
+    border-radius: 9px;
+    pointer-events: none;
+  }
   .youre { text-align: center; font-size: clamp(2.5rem, 12vw, 3.4rem); line-height: 1.2; }
   .tiles.small { gap: .3rem .5rem; }
   .tiles.small i { font-size: .95rem; width: 1.6em; }
@@ -522,6 +537,25 @@
   .modal .scrim { position: absolute; inset: 0; background: rgba(92, 74, 56, .5); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
   .modal .sheet { position: relative; width: min(92vw, 26rem); max-height: 86svh; overflow: auto; animation: sheetIn .5s cubic-bezier(.34,1.3,.5,1); }
   @keyframes sheetIn { from { opacity: 0; transform: translateY(28px) scale(.96); } }
+  .sound-toggle {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 65;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    background: var(--cream);
+    color: var(--brown);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 10px 24px -12px rgba(111, 69, 41, .4);
+  }
+  .sound-toggle[hidden] { display: none; }
+
   .modal-x {
     position: absolute;
     top: .6rem; right: .8rem;
@@ -621,7 +655,7 @@
     <p class="script youre reveal">You're Invited!</p>
 
     <!-- teddy on a cloud with heart balloon -->
-    <svg class="bear-cloud piece reveal" style="--w:60%; --side:flex-start; --tilt:-3deg; --mt:.2rem" viewBox="0 0 260 220" aria-hidden="true">
+    <svg class="bear-cloud piece reveal" style="--w:46%; --side:flex-end; --tilt:2.5deg; --mt:.4rem" viewBox="0 0 260 220" aria-hidden="true">
       <path fill="#b5714f" d="M62 22c-5-7-19-5-19 5 0 8 10 14 19 21 9-7 19-13 19-21 0-10-14-12-19-5Z"/>
       <path fill="none" stroke="#a97f5a" stroke-width="1.3" d="M62 48c8 26 24 44 34 66"/>
       <path fill="#c9a24f" d="M212 60c.7 5 3.5 7.8 8.5 8.5-5 .7-7.8 3.5-8.5 8.5-.7-5-3.5-7.8-8.5-8.5 5-.7 7.8-3.5 8.5-8.5Z"/>
@@ -651,7 +685,7 @@
     </svg>
 
     <!-- invitation card -->
-    <div class="card piece reveal" style="--w:88%; --side:flex-end; --tilt:1.6deg; --mt:-2.6rem; --d:.1s">
+    <div class="card piece reveal" style="--w:85%; --side:flex-start; --tilt:-1.2deg; --mt:1.2rem; --d:.1s">
       <div class="tiles small" role="heading" aria-level="2" aria-label="Baby Barry Land">
         <span class="word" aria-hidden="true"><i>B</i><i>a</i><i>b</i><i>y</i></span>
         <span class="word" aria-hidden="true"><i>B</i><i>a</i><i>r</i><i>r</i><i>y</i></span>
@@ -663,7 +697,7 @@
     </div>
 
     <!-- date & place card -->
-    <div class="card piece reveal" style="--w:72%; --side:flex-start; --tilt:-2.2deg; --mt:-1.2rem; --d:.12s">
+    <div class="card piece reveal" style="--w:68%; --side:flex-end; --tilt:1.5deg; --mt:2.2rem; --d:.12s">
       <p class="script" style="font-size:1.6rem">save the date</p>
       <p class="date-serif">August 23</p>
       <p class="caps sm">at 12:00 PM</p>
@@ -673,7 +707,7 @@
     </div>
 
     <!-- registry badge -->
-    <a class="badge piece reveal" style="--w:58%; --side:flex-end; --tilt:2.4deg; --mt:-.8rem; --d:.15s" href="https://shorturl.at/RCu5r" target="_blank" rel="noopener" aria-label="Click for the registry — opens our Amazon registry">
+    <a class="badge piece reveal" style="--w:50%; --side:flex-start; --tilt:-2deg; --mt:2.4rem; --d:.15s" href="https://shorturl.at/RCu5r" target="_blank" rel="noopener" aria-label="Click for the registry — opens our Amazon registry">
       <svg viewBox="0 0 200 180" aria-hidden="true">
         <circle cx="46" cy="42" r="34" fill="#f2dfae"/>
         <circle cx="154" cy="42" r="34" fill="#f2dfae"/>
@@ -686,7 +720,7 @@
     </a>
 
   <!-- BOOKS FOR BABY -->
-    <div class="card piece reveal" style="--w:90%; --side:flex-start; --tilt:1.2deg; --mt:-.6rem">
+    <div class="card piece reveal" style="--w:84%; --side:flex-end; --tilt:1.2deg; --mt:2.2rem">
       <div class="banner" role="heading" aria-level="2" aria-label="Books for Baby">
         <span class="word" aria-hidden="true"><i>B</i><i>o</i><i>o</i><i>k</i><i>s</i></span>
         <span class="word" aria-hidden="true"><i>f</i><i>o</i><i>r</i></span>
@@ -714,7 +748,7 @@
     </div>
 
     <!-- RSVP opener -->
-    <button class="card piece rsvp-piece reveal" id="rsvpOpen" style="--w:64%; --side:flex-end; --tilt:-2deg; --mt:-.9rem" aria-haspopup="dialog">
+    <button class="card piece rsvp-piece reveal" id="rsvpOpen" style="--w:56%; --side:flex-start; --tilt:-1.6deg; --mt:2.4rem" aria-haspopup="dialog">
       <svg width="46" height="46" viewBox="0 0 60 60" aria-hidden="true">
         <circle cx="30" cy="30" r="26" fill="#c9a24f"/>
         <circle cx="30" cy="30" r="26" fill="none" stroke="#b48c3c" stroke-width="2" stroke-dasharray="3 4"/>
@@ -738,6 +772,16 @@
 
   </div><!-- /collage -->
 </main>
+
+<!-- floating music mute toggle (appears once the envelope opens) -->
+<button class="sound-toggle" id="soundBtn" aria-label="Mute music" hidden>
+  <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+    <path d="M9 18V5l10-2v11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+    <circle cx="6.5" cy="18" r="2.6" fill="currentColor"/>
+    <circle cx="16.5" cy="14" r="2.6" fill="currentColor"/>
+    <line class="mute-line" x1="3" y1="21" x2="21" y2="3" stroke="currentColor" stroke-width="1.6" style="display:none"/>
+  </svg>
+</button>
 
 <!-- ═══════════════ RSVP MODAL ═══════════════ -->
 <div class="modal" id="rsvpModal" role="dialog" aria-modal="true" aria-label="RSVP form">
@@ -807,34 +851,100 @@
 
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* --- magical sparkle chime (Web Audio — no sound file needed) --- */
+  /* ============================================================
+     SOUND (Web Audio — no files needed)
+     magicChime: sparkle glissando when the envelope opens
+     ambient: a very soft royal music-box loop (~10s, C–Am–F–G)
+     ============================================================ */
+  let audioCtx = null, ambientGain = null, ambientTimer = null, muted = false;
+  const AMBIENT_LEVEL = .05;   // "very softly" — raise to taste (max 1)
+
+  const getCtx = () => audioCtx || (audioCtx = new (window.AudioContext || window.webkitAudioContext)());
+
+  // one soft bell-like note into `dest`
+  function bell(freq, t, dur, peak, dest) {
+    const c = getCtx();
+    const osc = c.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.value = freq;
+    const shimmer = c.createOscillator();
+    shimmer.type = 'triangle';
+    shimmer.frequency.value = freq * 2;
+    const g = c.createGain();
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(peak, t + .03);
+    g.gain.exponentialRampToValueAtTime(.0008, t + dur);
+    const sg = c.createGain();
+    sg.gain.value = .1;
+    osc.connect(g); shimmer.connect(sg); sg.connect(g); g.connect(dest);
+    osc.start(t); shimmer.start(t);
+    osc.stop(t + dur + .1); shimmer.stop(t + dur + .1);
+  }
+
   function magicChime() {
     try {
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const master = ctx.createGain();
-      master.gain.value = .4;
-      master.connect(ctx.destination);
-      // rising harp-like glissando: C E G C E G C
-      [523.25, 659.25, 783.99, 1046.5, 1318.5, 1567.98, 2093].forEach((f, i) => {
-        const t = ctx.currentTime + .05 + i * .085;
-        const osc = ctx.createOscillator();
-        osc.type = 'sine';
-        osc.frequency.value = f;
-        const shimmer = ctx.createOscillator();
-        shimmer.type = 'triangle';
-        shimmer.frequency.value = f * 2;
-        const g = ctx.createGain();
-        g.gain.setValueAtTime(0, t);
-        g.gain.linearRampToValueAtTime(.3, t + .02);
-        g.gain.exponentialRampToValueAtTime(.001, t + 1.4);
-        const sg = ctx.createGain();
-        sg.gain.value = .12;
-        osc.connect(g); shimmer.connect(sg); sg.connect(g); g.connect(master);
-        osc.start(t); shimmer.start(t);
-        osc.stop(t + 1.5); shimmer.stop(t + 1.5);
-      });
+      const c = getCtx();
+      const m = c.createGain();
+      m.gain.value = .4;
+      m.connect(c.destination);
+      [523.25, 659.25, 783.99, 1046.5, 1318.5, 1567.98, 2093].forEach((f, i) =>
+        bell(f, c.currentTime + .05 + i * .085, 1.4, .3, m));
     } catch (e) { /* sound is a garnish — never block the open */ }
   }
+
+  function startAmbient() {
+    try {
+      if (ambientGain) return;
+      const c = getCtx();
+      ambientGain = c.createGain();
+      ambientGain.gain.setValueAtTime(0, c.currentTime);
+      ambientGain.gain.linearRampToValueAtTime(muted ? 0 : AMBIENT_LEVEL, c.currentTime + 4);
+      ambientGain.connect(c.destination);
+      // four gentle arpeggiated chords, 2.5s each = 10s loop
+      const CHORDS = [
+        { root: 261.63, arp: [523.25, 659.25, 783.99, 1046.50, 783.99, 659.25] }, // C
+        { root: 220.00, arp: [440.00, 523.25, 659.25,  880.00, 659.25, 523.25] }, // Am
+        { root: 174.61, arp: [349.23, 440.00, 523.25,  698.46, 523.25, 440.00] }, // F
+        { root: 196.00, arp: [392.00, 493.88, 587.33,  783.99, 587.33, 493.88] }, // G
+      ];
+      const LOOP = 10;
+      const schedule = (t0) => {
+        CHORDS.forEach((ch, ci) => {
+          const t = t0 + ci * 2.5;
+          bell(ch.root, t, 2.8, .5, ambientGain);
+          ch.arp.forEach((f, ni) => bell(f, t + .15 + ni * .38, 2.2, .35, ambientGain));
+        });
+      };
+      let next = c.currentTime + 1.2;
+      schedule(next);
+      ambientTimer = setInterval(() => { next += LOOP; schedule(next); }, LOOP * 1000);
+    } catch (e) {}
+  }
+
+  function stopAmbient() {
+    if (!ambientGain) return;
+    const c = getCtx();
+    clearInterval(ambientTimer);
+    const g = ambientGain;
+    ambientGain = null;
+    g.gain.cancelScheduledValues(c.currentTime);
+    g.gain.setValueAtTime(g.gain.value, c.currentTime);
+    g.gain.linearRampToValueAtTime(0, c.currentTime + 1);
+    setTimeout(() => g.disconnect(), 1200);
+  }
+
+  const soundBtn = document.getElementById('soundBtn');
+  soundBtn.addEventListener('click', () => {
+    muted = !muted;
+    soundBtn.querySelector('.mute-line').style.display = muted ? '' : 'none';
+    soundBtn.setAttribute('aria-label', muted ? 'Unmute music' : 'Mute music');
+    if (ambientGain) {
+      const c = getCtx();
+      ambientGain.gain.cancelScheduledValues(c.currentTime);
+      ambientGain.gain.setValueAtTime(ambientGain.gain.value, c.currentTime);
+      ambientGain.gain.linearRampToValueAtTime(muted ? 0 : AMBIENT_LEVEL, c.currentTime + .4);
+    }
+  });
 
   /* --- envelope gate --- */
   const gate = document.getElementById('gate');
@@ -843,6 +953,8 @@
     if (opened) return;
     opened = true;
     magicChime();
+    startAmbient();
+    soundBtn.hidden = false;
     gate.classList.add('open', 'away');
     setTimeout(() => {
       document.body.classList.remove('locked');
@@ -852,6 +964,8 @@
 
   document.getElementById('backBtn').addEventListener('click', () => {
     opened = false;
+    stopAmbient();
+    soundBtn.hidden = true;
     window.scrollTo({ top: 0, behavior: 'instant' });
     document.body.classList.add('locked');
     gate.classList.remove('open', 'away');
