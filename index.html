@@ -463,14 +463,87 @@
     cursor: pointer;
   }
 
+  /* ============================================================
+     SCRAPBOOK COLLAGE — compact, overlapping, tilted pieces
+     ============================================================ */
+  .collage {
+    position: relative;
+    max-width: 30rem;
+    margin: 0 auto;
+    padding: 3.2rem 1.4rem 3rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .piece {
+    align-self: var(--side, center);
+    width: var(--w, 100%);
+    margin-top: var(--mt, 1.6rem);
+  }
+  .piece.card { padding: 1.8rem 1.4rem 1.7rem; border-radius: 16px; }
+  .youre { text-align: center; font-size: clamp(2.5rem, 12vw, 3.4rem); line-height: 1.2; }
+  .tiles.small { gap: .3rem .5rem; }
+  .tiles.small i { font-size: .95rem; width: 1.6em; }
+  .caps.sm { display: block; font-size: .64rem; letter-spacing: .26em; text-indent: .26em; color: var(--brown-deep); line-height: 2; }
+  .big-name { font-size: clamp(2.5rem, 11vw, 3.2rem); line-height: 1.3; margin: .2rem 0 .4rem; }
+  .date-serif { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: clamp(1.7rem, 7vw, 2.1rem); color: var(--brown-deep); line-height: 1.2; }
+  .maplink { display: inline-block; margin-top: .8rem; font-size: .6rem; letter-spacing: .3em; text-indent: .3em; text-transform: uppercase; color: var(--brown); text-decoration: underline; text-underline-offset: 4px; }
+
+  .badge {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    transform: rotate(var(--tilt, 0deg));
+    filter: drop-shadow(0 14px 22px rgba(111, 69, 41, .22));
+    transition: transform .4s ease;
+  }
+  .badge:hover, .badge:focus-visible { transform: rotate(var(--tilt, 0deg)) scale(1.05); }
+  .badge svg { width: 100%; height: auto; display: block; }
+  .badge .btxt { position: absolute; left: 12%; right: 12%; top: 32%; bottom: 12%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .badge .btxt .caps { font-size: .6rem; color: #9c7433; letter-spacing: .24em; text-indent: .24em; }
+  .badge .btxt .script { font-size: clamp(1.7rem, 8vw, 2.2rem); line-height: 1.2; color: #9c7433; }
+
+  .rsvp-piece {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .2rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: transform .4s ease;
+  }
+  .rsvp-piece:hover, .rsvp-piece:focus-visible { transform: rotate(var(--tilt, 0deg)) scale(1.04); }
+  .rsvp-piece .rsvp-word { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 2.1rem; letter-spacing: .18em; text-indent: .18em; color: var(--brown-deep); line-height: 1.2; }
+
+  .collage-footer { text-align: center; margin-top: 3.2rem; color: var(--ink-soft); font-size: .82rem; letter-spacing: .12em; }
+
+  /* --- RSVP modal --- */
+  .modal { position: fixed; inset: 0; z-index: 70; display: none; align-items: center; justify-content: center; padding: 1.2rem; }
+  .modal.show { display: flex; }
+  .modal .scrim { position: absolute; inset: 0; background: rgba(92, 74, 56, .5); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+  .modal .sheet { position: relative; width: min(92vw, 26rem); max-height: 86svh; overflow: auto; animation: sheetIn .5s cubic-bezier(.34,1.3,.5,1); }
+  @keyframes sheetIn { from { opacity: 0; transform: translateY(28px) scale(.96); } }
+  .modal-x {
+    position: absolute;
+    top: .6rem; right: .8rem;
+    border: 0;
+    background: none;
+    font-size: 1.7rem;
+    color: var(--ink-soft);
+    cursor: pointer;
+    line-height: 1;
+    padding: .2rem .4rem;
+  }
+
   @media (min-width: 640px) {
-    .card { padding: 3.2rem 3rem 3rem; }
+    .piece.card { padding: 2.2rem 2rem 2rem; }
+    .modal .sheet { padding: 2.8rem 2.6rem 2.6rem; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .drift, .twinkle, .rise, .click-cue, .scroll-cue span:last-child { animation: none; }
     .reveal { opacity: 1; transform: none; transition: none; }
     .gate, .env-flap, .env-letter, .env-seal { transition: none; }
+    .modal .sheet { animation: none; }
     html { scroll-behavior: auto; }
   }
 </style>
@@ -544,10 +617,11 @@
 <!-- ═══════════════ MAIN PAGE ═══════════════ -->
 <main>
 
-  <!-- HERO -->
-  <section class="hero">
+  <div class="collage">
+    <p class="script youre reveal">You're Invited!</p>
+
     <!-- teddy on a cloud with heart balloon -->
-    <svg class="bear-cloud reveal" viewBox="0 0 260 220" aria-hidden="true">
+    <svg class="bear-cloud piece reveal" style="--w:60%; --side:flex-start; --tilt:-3deg; --mt:.2rem" viewBox="0 0 260 220" aria-hidden="true">
       <path fill="#b5714f" d="M62 22c-5-7-19-5-19 5 0 8 10 14 19 21 9-7 19-13 19-21 0-10-14-12-19-5Z"/>
       <path fill="none" stroke="#a97f5a" stroke-width="1.3" d="M62 48c8 26 24 44 34 66"/>
       <path fill="#c9a24f" d="M212 60c.7 5 3.5 7.8 8.5 8.5-5 .7-7.8 3.5-8.5 8.5-.7-5-3.5-7.8-8.5-8.5 5-.7 7.8-3.5 8.5-8.5Z"/>
@@ -576,62 +650,43 @@
       <path fill="#c9a24f" d="M76 170c.6 4.4 3 6.8 7.4 7.4-4.4.6-6.8 3-7.4 7.4-.6-4.4-3-6.8-7.4-7.4 4.4-.6 6.8-3 7.4-7.4Z"/>
     </svg>
 
-    <p class="caps l1 reveal" style="--d:.1s">We Can</p>
-    <p class="script l2 reveal" style="--d:.2s">bearly wait</p>
-    <p class="caps l3 reveal" style="--d:.3s">For Our Next Chapter</p>
-
-    <div class="honor reveal" style="--d:.45s">
-      <p class="caps">Join us for a baby shower honoring</p>
-      <p class="script name">Baby Barry</p>
-    </div>
-
-    <div class="scroll-cue"><span>scroll</span><span></span></div>
-  </section>
-
-  <!-- WHEN & WHERE -->
-  <section>
-    <div class="card reveal" style="--tilt:-1.2deg">
-      <span class="script kicker">save the date</span>
-      <h2>The Celebration</h2>
-      <hr class="rule">
-      <div class="ww">
-        <div class="cell">
-          <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#8a5a3b" stroke-width="1.5" aria-hidden="true"><rect x="3" y="6" width="28" height="25" rx="3"/><path d="M3 13h28M10 2v7M24 2v7"/><path d="M9 19h3m4 0h3m4 0h3M9 25h3m4 0h3" stroke-linecap="round"/></svg>
-          <span class="caps">August 23<br>12:00 PM</span>
-        </div>
-        <div class="div"></div>
-        <div class="cell">
-          <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#8a5a3b" stroke-width="1.5" aria-hidden="true"><path d="M17 31S6 20.5 6 12.5a11 11 0 0 1 22 0C28 20.5 17 31 17 31Z"/><circle cx="17" cy="12.5" r="4"/></svg>
-          <span class="caps">Our Home<br>Congo Town<br>Back Road</span>
-        </div>
+    <!-- invitation card -->
+    <div class="card piece reveal" style="--w:88%; --side:flex-end; --tilt:1.6deg; --mt:-2.6rem; --d:.1s">
+      <div class="tiles small" role="heading" aria-level="2" aria-label="Baby Barry Land">
+        <span class="word" aria-hidden="true"><i>B</i><i>a</i><i>b</i><i>y</i></span>
+        <span class="word" aria-hidden="true"><i>B</i><i>a</i><i>r</i><i>r</i><i>y</i></span>
+        <span class="word" aria-hidden="true"><i>L</i><i>a</i><i>n</i><i>d</i></span>
       </div>
-      <p class="note">Come ready to celebrate — we'd be beary happy to have you.</p>
-      <a class="btn ghost" href="https://www.google.com/maps/search/?api=1&query=778F%2BRW7+Monrovia%2C+Liberia" target="_blank" rel="noopener">Open in Maps</a>
+      <p class="caps sm" style="margin-top:1rem">Join us for a<br>baby shower<br>in honor of</p>
+      <p class="script big-name">Baby Barry</p>
+      <p class="caps sm" style="color:var(--ink-soft)">RSVP by August 10th</p>
     </div>
-  </section>
 
-  <!-- REGISTRY -->
-  <section>
-    <div class="card reveal" style="--tilt:1.2deg">
-      <svg width="64" height="56" viewBox="0 0 64 56" style="margin-bottom:.8rem" aria-hidden="true">
-        <circle cx="14" cy="12" r="10" fill="#c9935f"/><circle cx="14" cy="12" r="5" fill="#e7b49b"/>
-        <circle cx="50" cy="12" r="10" fill="#c9935f"/><circle cx="50" cy="12" r="5" fill="#e7b49b"/>
-        <circle cx="32" cy="30" r="24" fill="#c9935f"/>
-        <ellipse cx="32" cy="40" rx="11" ry="8" fill="#ecd0ab"/>
-        <path fill="#6f4529" d="M29.4 36c0-2 1.3-3 2.6-3s2.6 1 2.6 3c0 1.7-1.6 2.6-2.6 2.6s-2.6-.9-2.6-2.6Z"/>
-        <circle cx="24" cy="27" r="2.4" fill="#6f4529"/><circle cx="40" cy="27" r="2.4" fill="#6f4529"/>
-        <circle cx="18.5" cy="33" r="3.4" fill="#e7a184" opacity=".55"/><circle cx="45.5" cy="33" r="3.4" fill="#e7a184" opacity=".55"/>
-      </svg>
-      <h2>The Registry</h2>
-      <hr class="rule">
-      <p class="note">Your presence is all we need — but if you'd like to get us a gift, we're registered at Amazon.</p>
-      <a class="btn" href="https://shorturl.at/RCu5r" target="_blank" rel="noopener">View Our Registry</a>
+    <!-- date & place card -->
+    <div class="card piece reveal" style="--w:72%; --side:flex-start; --tilt:-2.2deg; --mt:-1.2rem; --d:.12s">
+      <p class="script" style="font-size:1.6rem">save the date</p>
+      <p class="date-serif">August 23</p>
+      <p class="caps sm">at 12:00 PM</p>
+      <hr class="rule" style="margin:1rem auto">
+      <p class="caps sm">Our Home<br>Congo Town<br>Back Road</p>
+      <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=778F%2BRW7+Monrovia%2C+Liberia" target="_blank" rel="noopener">open in maps ↗</a>
     </div>
-  </section>
+
+    <!-- registry badge -->
+    <a class="badge piece reveal" style="--w:58%; --side:flex-end; --tilt:2.4deg; --mt:-.8rem; --d:.15s" href="https://shorturl.at/RCu5r" target="_blank" rel="noopener" aria-label="Click for the registry — opens our Amazon registry">
+      <svg viewBox="0 0 200 180" aria-hidden="true">
+        <circle cx="46" cy="42" r="34" fill="#f2dfae"/>
+        <circle cx="154" cy="42" r="34" fill="#f2dfae"/>
+        <circle cx="100" cy="106" r="72" fill="#f2dfae"/>
+      </svg>
+      <span class="btxt" aria-hidden="true">
+        <span class="caps">Click for the</span>
+        <span class="script">Registry</span>
+      </span>
+    </a>
 
   <!-- BOOKS FOR BABY -->
-  <section>
-    <div class="card reveal" style="--tilt:1deg">
+    <div class="card piece reveal" style="--w:90%; --side:flex-start; --tilt:1.2deg; --mt:-.6rem">
       <div class="banner" role="heading" aria-level="2" aria-label="Books for Baby">
         <span class="word" aria-hidden="true"><i>B</i><i>o</i><i>o</i><i>k</i><i>s</i></span>
         <span class="word" aria-hidden="true"><i>f</i><i>o</i><i>r</i></span>
@@ -657,11 +712,38 @@
       <p class="note" style="margin-top:0">Thinking of writing a card? Sign a book instead — your note will live on Baby Barry's shelf for years to come.</p>
       <p class="note" style="font-style:italic; margin-top:.8rem">Only if you'd like — new or gently loved, any story you love is perfect. 📖</p>
     </div>
-  </section>
 
-  <!-- RSVP -->
-  <section>
-    <div class="card rsvp-card reveal" id="rsvpCard" style="--tilt:-1deg">
+    <!-- RSVP opener -->
+    <button class="card piece rsvp-piece reveal" id="rsvpOpen" style="--w:64%; --side:flex-end; --tilt:-2deg; --mt:-.9rem" aria-haspopup="dialog">
+      <svg width="46" height="46" viewBox="0 0 60 60" aria-hidden="true">
+        <circle cx="30" cy="30" r="26" fill="#c9a24f"/>
+        <circle cx="30" cy="30" r="26" fill="none" stroke="#b48c3c" stroke-width="2" stroke-dasharray="3 4"/>
+        <path fill="#fdfaf2" d="M30 22c-3-4-11-3-11 4 0 5 6 9 11 13 5-4 11-8 11-13 0-7-8-8-11-4Z"/>
+      </svg>
+      <span class="rsvp-word">RSVP</span>
+      <span class="caps sm" style="color:var(--brown)">click here!</span>
+    </button>
+
+    <!-- footer -->
+    <div class="collage-footer reveal">
+      <svg width="46" height="30" viewBox="0 0 46 30" aria-hidden="true">
+        <path fill="none" stroke="#8a5a3b" stroke-width="1.4" stroke-linejoin="round" d="M23 6C19 2.6 12 2 3 3.6V25c9-1.6 16-1 20 2.4 4-3.4 11-4 20-2.4V3.6C34 2 27 2.6 23 6Zm0 0v21.4"/>
+        <path fill="none" stroke="#c9a24f" stroke-width="1.1" stroke-linecap="round" d="M8 9.5c4-.7 8-.6 11 .5M8 14.5c4-.7 8-.6 11 .5M27 10c3-1.1 7-1.2 11-.5M27 15c3-1.1 7-1.2 11-.5"/>
+      </svg>
+      <span class="script" style="display:block; font-size:1.9rem; line-height:1.4">we can bearly wait to celebrate with you</span>
+      <span>— with love, The Barry's —</span>
+      <br>
+      <button class="back-to-env" id="backBtn">Return to Envelope</button>
+    </div>
+
+  </div><!-- /collage -->
+</main>
+
+<!-- ═══════════════ RSVP MODAL ═══════════════ -->
+<div class="modal" id="rsvpModal" role="dialog" aria-modal="true" aria-label="RSVP form">
+  <div class="scrim"></div>
+  <div class="sheet card rsvp-card" id="rsvpCard">
+    <button class="modal-x" id="rsvpClose" aria-label="Close">×</button>
       <svg width="44" height="32" viewBox="0 0 44 32" style="margin-bottom:.6rem" aria-hidden="true"><g fill="none" stroke="#8a5a3b" stroke-width="1.4"><rect x="2" y="2" width="40" height="28" rx="3"/><path d="m2 4 20 15L42 4"/></g></svg>
       <span class="script kicker">kindly reply</span>
       <h2>RSVP</h2>
@@ -709,22 +791,8 @@
         <span class="script">thank you!</span>
         <p class="note">Your RSVP is in — we can bearly wait to see you there. 🤎</p>
       </div>
-    </div>
-  </section>
-
-  <footer>
-    <svg class="reveal" width="46" height="30" viewBox="0 0 46 30" style="margin-bottom:.7rem" aria-hidden="true">
-      <path fill="none" stroke="#8a5a3b" stroke-width="1.4" stroke-linejoin="round" d="M23 6C19 2.6 12 2 3 3.6V25c9-1.6 16-1 20 2.4 4-3.4 11-4 20-2.4V3.6C34 2 27 2.6 23 6Zm0 0v21.4"/>
-      <path fill="none" stroke="#c9a24f" stroke-width="1.1" stroke-linecap="round" d="M8 9.5c4-.7 8-.6 11 .5M8 14.5c4-.7 8-.6 11 .5M27 10c3-1.1 7-1.2 11-.5M27 15c3-1.1 7-1.2 11-.5"/>
-    </svg>
-    <br>
-    <span class="script reveal">we can bearly wait to celebrate with you</span>
-    <span class="reveal" style="--d:.15s">— with love, The Barry's —</span>
-    <br>
-    <button class="back-to-env" id="backBtn">Return to Envelope</button>
-  </footer>
-
-</main>
+  </div>
+</div>
 
 <script>
   /* ============================================================
@@ -739,12 +807,42 @@
 
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* --- magical sparkle chime (Web Audio — no sound file needed) --- */
+  function magicChime() {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const master = ctx.createGain();
+      master.gain.value = .4;
+      master.connect(ctx.destination);
+      // rising harp-like glissando: C E G C E G C
+      [523.25, 659.25, 783.99, 1046.5, 1318.5, 1567.98, 2093].forEach((f, i) => {
+        const t = ctx.currentTime + .05 + i * .085;
+        const osc = ctx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.value = f;
+        const shimmer = ctx.createOscillator();
+        shimmer.type = 'triangle';
+        shimmer.frequency.value = f * 2;
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(.3, t + .02);
+        g.gain.exponentialRampToValueAtTime(.001, t + 1.4);
+        const sg = ctx.createGain();
+        sg.gain.value = .12;
+        osc.connect(g); shimmer.connect(sg); sg.connect(g); g.connect(master);
+        osc.start(t); shimmer.start(t);
+        osc.stop(t + 1.5); shimmer.stop(t + 1.5);
+      });
+    } catch (e) { /* sound is a garnish — never block the open */ }
+  }
+
   /* --- envelope gate --- */
   const gate = document.getElementById('gate');
   let opened = false;
   document.getElementById('openBtn').addEventListener('click', () => {
     if (opened) return;
     opened = true;
+    magicChime();
     gate.classList.add('open', 'away');
     setTimeout(() => {
       document.body.classList.remove('locked');
@@ -779,6 +877,15 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* --- RSVP modal --- */
+  const modal = document.getElementById('rsvpModal');
+  const openModal = () => { modal.classList.add('show'); document.body.classList.add('locked'); };
+  const closeModal = () => { modal.classList.remove('show'); document.body.classList.remove('locked'); };
+  document.getElementById('rsvpOpen').addEventListener('click', openModal);
+  document.getElementById('rsvpClose').addEventListener('click', closeModal);
+  modal.querySelector('.scrim').addEventListener('click', closeModal);
+  addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('show')) closeModal(); });
 
   /* --- RSVP form --- */
   const form = document.getElementById('rsvpForm');
