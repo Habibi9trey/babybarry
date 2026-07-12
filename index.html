@@ -342,6 +342,31 @@
     box-shadow: 0 14px 30px -12px rgba(111, 69, 41, .5);
   }
   .btn:disabled { opacity: .6; cursor: default; transform: none; }
+  .btn.ghost { background: transparent; color: var(--brown); border-color: var(--gold); }
+  .btn.ghost:hover, .btn.ghost:focus-visible { background: var(--gold); color: var(--cream); }
+
+  /* --- pennant banner lettering (Books for Baby) --- */
+  .banner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .3rem .85rem;
+    margin-bottom: .9rem;
+  }
+  .banner .word { display: flex; gap: .26rem; }
+  .banner i {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: clamp(.95rem, 4.2vw, 1.2rem);
+    line-height: 1;
+    width: 1.55em;
+    padding: .34em 0 .62em;
+    text-align: center;
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
+  }
+  .banner .word i:nth-child(odd)  { background: #f0cdb8; color: #a96844; transform: rotate(-2deg); }
+  .banner .word i:nth-child(even) { background: #cfe1ee; color: #567f9b; transform: rotate(2deg); }
 
   /* --- RSVP form --- */
   form { margin-top: 1.6rem; text-align: left; }
@@ -581,6 +606,8 @@
         </div>
       </div>
       <p class="note">Come ready to celebrate — we'd be beary happy to have you.</p>
+      <!-- Replace the href with your exact Google Maps pin link (share → copy link) for door-to-door directions -->
+      <a class="btn ghost" href="https://www.google.com/maps/search/?api=1&query=Congo+Town+Back+Road%2C+Monrovia" target="_blank" rel="noopener">Open in Maps</a>
     </div>
   </section>
 
@@ -600,6 +627,36 @@
       <hr class="rule">
       <p class="note">Your presence is all we need — but if you'd like to get us a gift, we're registered at Amazon.</p>
       <a class="btn" href="https://shorturl.at/RCu5r" target="_blank" rel="noopener">View Our Registry</a>
+    </div>
+  </section>
+
+  <!-- BOOKS FOR BABY -->
+  <section>
+    <div class="card reveal" style="--tilt:1deg">
+      <div class="banner" role="heading" aria-level="2" aria-label="Books for Baby">
+        <span class="word" aria-hidden="true"><i>B</i><i>o</i><i>o</i><i>k</i><i>s</i></span>
+        <span class="word" aria-hidden="true"><i>f</i><i>o</i><i>r</i></span>
+        <span class="word" aria-hidden="true"><i>B</i><i>a</i><i>b</i><i>y</i></span>
+      </div>
+      <!-- little stack of books -->
+      <svg width="110" height="86" viewBox="0 0 120 94" style="margin:.4rem 0 .2rem" aria-hidden="true">
+        <path fill="#c9a24f" d="M60 2c.6 4 2.8 6.2 6.8 6.8-4 .6-6.2 2.8-6.8 6.8-.6-4-2.8-6.2-6.8-6.8 4-.6 6.2-2.8 6.8-6.8Z"/>
+        <g>
+          <rect x="20" y="26" width="76" height="17" rx="3" fill="#cfe1ee" transform="rotate(-3 58 34)"/>
+          <rect x="20" y="26" width="9" height="17" rx="3" fill="#a9c6db" transform="rotate(-3 58 34)"/>
+        </g>
+        <g>
+          <rect x="14" y="46" width="88" height="18" rx="3" fill="#f0cdb8"/>
+          <rect x="14" y="46" width="10" height="18" rx="3" fill="#dfab8e"/>
+        </g>
+        <g>
+          <rect x="18" y="67" width="92" height="19" rx="3" fill="#d3a26d" transform="rotate(2 64 76)"/>
+          <rect x="18" y="67" width="11" height="19" rx="3" fill="#b9854e" transform="rotate(2 64 76)"/>
+        </g>
+      </svg>
+      <hr class="rule">
+      <p class="note" style="margin-top:0">Instead of a card, please bring a book to share — and sign your name inside, so your love is always there.</p>
+      <p class="note" style="font-style:italic; margin-top:.8rem">New or gently loved, your favorite childhood story would make it extra special. 📖</p>
     </div>
   </section>
 
@@ -657,6 +714,11 @@
   </section>
 
   <footer>
+    <svg class="reveal" width="46" height="30" viewBox="0 0 46 30" style="margin-bottom:.7rem" aria-hidden="true">
+      <path fill="none" stroke="#8a5a3b" stroke-width="1.4" stroke-linejoin="round" d="M23 6C19 2.6 12 2 3 3.6V25c9-1.6 16-1 20 2.4 4-3.4 11-4 20-2.4V3.6C34 2 27 2.6 23 6Zm0 0v21.4"/>
+      <path fill="none" stroke="#c9a24f" stroke-width="1.1" stroke-linecap="round" d="M8 9.5c4-.7 8-.6 11 .5M8 14.5c4-.7 8-.6 11 .5M27 10c3-1.1 7-1.2 11-.5M27 15c3-1.1 7-1.2 11-.5"/>
+    </svg>
+    <br>
     <span class="script reveal">we can bearly wait to celebrate with you</span>
     <span class="reveal" style="--d:.15s">— with love, The Barry's —</span>
     <br>
