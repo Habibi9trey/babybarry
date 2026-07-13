@@ -515,6 +515,14 @@
     opacity: .85;
     pointer-events: none;
   }
+  .piece.card.no-stamp::after { content: none; }
+
+  .registry-cap {
+    text-align: center;
+    font-size: .82rem;
+    font-style: italic;
+    color: var(--ink-soft);
+  }
   .youre { text-align: center; font-size: clamp(2.5rem, 12vw, 3.4rem); line-height: 1.2; }
   .tiles.small { gap: .3rem .5rem; }
   .tiles.small i { font-size: .95rem; width: 1.6em; }
@@ -705,7 +713,7 @@
     </svg>
 
     <!-- invitation card -->
-    <div class="card piece reveal" style="--w:85%; --side:flex-start; --tilt:-1.2deg; --mt:1.2rem; --d:.1s">
+    <div class="card piece no-stamp reveal" style="--w:85%; --side:flex-start; --tilt:-1.2deg; --mt:1.2rem; --d:.1s">
       <div class="tiles small" role="heading" aria-level="2" aria-label="Baby Barry Land">
         <span class="word" aria-hidden="true"><i>B</i><i>a</i><i>b</i><i>y</i></span>
         <span class="word" aria-hidden="true"><i>B</i><i>a</i><i>r</i><i>r</i><i>y</i></span>
@@ -722,7 +730,7 @@
       <p class="date-serif">August 23</p>
       <p class="caps sm">at 12:00 PM</p>
       <hr class="rule" style="margin:1rem auto">
-      <p class="caps sm">Our Home<br>Congo Town, Back Road</p>
+      <p class="caps sm">Congo Town, Back Road</p>
       <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=778F%2BRW7+Monrovia%2C+Liberia" target="_blank" rel="noopener">open in maps ↗</a>
     </div>
 
@@ -749,9 +757,10 @@
         <span class="script">Registry</span>
       </span>
     </a>
+    <p class="piece registry-cap reveal" style="--w:64%; --side:flex-end; --mt:.5rem">Want to spoil Baby Barry? We're registered at Amazon — just tap the bear. 🤍</p>
 
   <!-- BOOKS FOR BABY -->
-    <div class="card piece reveal" style="--w:84%; --side:flex-start; --tilt:1.2deg; --mt:2.2rem; --stamp-bg:#cfe1ee; --stamp-ink:#567f9b">
+    <div class="card piece no-stamp reveal" style="--w:84%; --side:flex-start; --tilt:1.2deg; --mt:2.2rem">
       <div class="banner" role="heading" aria-level="2" aria-label="Books for Baby">
         <span class="word" aria-hidden="true"><i>B</i><i>o</i><i>o</i><i>k</i><i>s</i></span>
         <span class="word" aria-hidden="true"><i>f</i><i>o</i><i>r</i></span>
