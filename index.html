@@ -895,41 +895,47 @@
   /* ============================================================
      SOUND (Web Audio — no files needed)
      magicChime: sparkle glissando when the envelope opens
-     ambient: a very soft royal music-box loop (~10s, C–Am–F–G)
+     ambient: a very soft royal round (~20s, C–G–Am–Em–F–C–F–G)
      ============================================================ */
   let audioCtx = null, ambientGain = null, ambientTimer = null, muted = false;
-  const AMBIENT_LEVEL = .02;   // "very softly" — raise to taste (max 1)
+  const AMBIENT_LEVEL = .014;  // "very softly" — raise to taste (max 1)
 
   const getCtx = () => audioCtx || (audioCtx = new (window.AudioContext || window.webkitAudioContext)());
 
   // one soft bell-like note into `dest`; slow attack = dreamy swell, fast = sparkle
+  // fundamental + faintly detuned twin (velvet chorus) + quiet octave shimmer
   function bell(freq, t, dur, peak, dest, attack = .03, shimmerLvl = .1) {
     const c = getCtx();
-    const osc = c.createOscillator();
-    osc.type = 'sine';
-    osc.frequency.value = freq;
-    const shimmer = c.createOscillator();
-    shimmer.type = 'triangle';
-    shimmer.frequency.value = freq * 2;
     const g = c.createGain();
     g.gain.setValueAtTime(0, t);
     g.gain.linearRampToValueAtTime(peak, t + attack);
     g.gain.exponentialRampToValueAtTime(.0008, t + dur);
-    const sg = c.createGain();
-    sg.gain.value = shimmerLvl;
-    osc.connect(g); shimmer.connect(sg); sg.connect(g); g.connect(dest);
-    osc.start(t); shimmer.start(t);
-    osc.stop(t + dur + .1); shimmer.stop(t + dur + .1);
+    g.connect(dest);
+    [['sine', freq, 1], ['sine', freq * 1.004, .35], ['triangle', freq * 2, shimmerLvl]]
+      .forEach(([type, f, lvl]) => {
+        const o = c.createOscillator();
+        o.type = type;
+        o.frequency.value = f;
+        const vg = c.createGain();
+        vg.gain.value = lvl;
+        o.connect(vg); vg.connect(g);
+        o.start(t); o.stop(t + dur + .1);
+      });
   }
 
   function magicChime() {
     try {
       const c = getCtx();
       const m = c.createGain();
-      m.gain.value = .2;
+      m.gain.value = .07;
       m.connect(c.destination);
+      // gentle lowpass takes the glassy edge off the sparkle
+      const soft = c.createBiquadFilter();
+      soft.type = 'lowpass';
+      soft.frequency.value = 2400;
+      soft.connect(m);
       [523.25, 659.25, 783.99, 1046.5, 1318.5, 1567.98, 2093].forEach((f, i) =>
-        bell(f, c.currentTime + .05 + i * .085, 1.4, .3, m));
+        bell(f, c.currentTime + .05 + i * .085, 1.6, .22, soft, .05, .06));
     } catch (e) { /* sound is a garnish — never block the open */ }
   }
 
@@ -944,21 +950,29 @@
       // warm lowpass keeps it velvety — no pingy highs
       const warmth = c.createBiquadFilter();
       warmth.type = 'lowpass';
-      warmth.frequency.value = 1200;
+      warmth.frequency.value = 1000;
       warmth.connect(ambientGain);
-      // four dreamy arpeggiated chords an octave down, 2.5s each = 10s loop
+      // a stately Pachelbel-style round in C — eight chords, 2.5s each = 20s loop.
+      // each bar: deep root + open fifth underneath, a harp arpeggio with a
+      // touch of added-ninth colour, and one long swelling melody note above.
       const CHORDS = [
-        { root: 130.81, arp: [261.63, 329.63, 392.00, 523.25, 392.00, 329.63] }, // C
-        { root: 110.00, arp: [220.00, 261.63, 329.63, 440.00, 329.63, 261.63] }, // Am
-        { root:  87.31, arp: [174.61, 220.00, 261.63, 349.23, 261.63, 220.00] }, // F
-        { root:  98.00, arp: [196.00, 246.94, 293.66, 392.00, 293.66, 246.94] }, // G
+        { root: 130.81, fifth: 196.00, arp: [261.63, 329.63, 392.00, 523.25, 587.33, 392.00], mel: 659.25 }, // C     (mel E5)
+        { root:  98.00, fifth: 146.83, arp: [196.00, 246.94, 293.66, 392.00, 440.00, 293.66], mel: 587.33 }, // G     (mel D5)
+        { root: 110.00, fifth: 164.81, arp: [220.00, 261.63, 329.63, 440.00, 493.88, 329.63], mel: 523.25 }, // Am    (mel C5)
+        { root:  82.41, fifth: 123.47, arp: [164.81, 196.00, 246.94, 329.63, 392.00, 246.94], mel: 493.88 }, // Em    (mel B4)
+        { root:  87.31, fifth: 130.81, arp: [174.61, 220.00, 261.63, 349.23, 392.00, 261.63], mel: 440.00 }, // F     (mel A4)
+        { root: 130.81, fifth: 196.00, arp: [261.63, 329.63, 392.00, 329.63, 261.63, 196.00], mel: 392.00 }, // C     (mel G4)
+        { root:  87.31, fifth: 130.81, arp: [174.61, 261.63, 349.23, 440.00, 349.23, 261.63], mel: 440.00 }, // F     (mel A4)
+        { root:  98.00, fifth: 146.83, arp: [196.00, 293.66, 392.00, 493.88, 392.00, 293.66], mel: 493.88 }, // G     (mel B4)
       ];
-      const LOOP = 10;
+      const LOOP = 20;
       const schedule = (t0) => {
         CHORDS.forEach((ch, ci) => {
           const t = t0 + ci * 2.5;
-          bell(ch.root, t, 3.2, .45, warmth, .3, .03);
-          ch.arp.forEach((f, ni) => bell(f, t + .2 + ni * .42, 3, .3, warmth, .22, .03));
+          bell(ch.root, t, 3.4, .32, warmth, .4, .02);              // deep bass
+          bell(ch.fifth, t + .05, 3.2, .16, warmth, .5, .02);       // open fifth — regal foundation
+          ch.arp.forEach((f, ni) => bell(f, t + .2 + ni * .38, 2.8, .18, warmth, .3, .02));
+          bell(ch.mel, t + .5, 2.9, .1, warmth, .9, .02);           // slow counter-melody floating above
         });
       };
       let next = c.currentTime + 1.2;
