@@ -495,6 +495,26 @@
     border-radius: 9px;
     pointer-events: none;
   }
+  /* little postage stamp — makes each card read as a mailed letter */
+  .piece.card::after {
+    content: '♥';
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 26px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .72rem;
+    color: var(--stamp-ink, #a96844);
+    background: var(--stamp-bg, #f0cdb8);
+    border: 1px dashed rgba(111, 69, 41, .35);
+    border-radius: 2px;
+    transform: rotate(4deg);
+    opacity: .85;
+    pointer-events: none;
+  }
   .youre { text-align: center; font-size: clamp(2.5rem, 12vw, 3.4rem); line-height: 1.2; }
   .tiles.small { gap: .3rem .5rem; }
   .tiles.small i { font-size: .95rem; width: 1.6em; }
@@ -691,23 +711,34 @@
         <span class="word" aria-hidden="true"><i>B</i><i>a</i><i>r</i><i>r</i><i>y</i></span>
         <span class="word" aria-hidden="true"><i>L</i><i>a</i><i>n</i><i>d</i></span>
       </div>
-      <p class="caps sm" style="margin-top:1rem">Join us for a<br>baby shower<br>in honor of</p>
+      <p class="caps sm" style="margin-top:1rem">Join us for a baby shower in honor of</p>
       <p class="script big-name">Baby Barry</p>
       <p class="caps sm" style="color:var(--ink-soft)">RSVP by August 10th</p>
     </div>
 
     <!-- date & place card -->
-    <div class="card piece reveal" style="--w:68%; --side:flex-end; --tilt:1.5deg; --mt:2.2rem; --d:.12s">
+    <div class="card piece reveal" style="--w:68%; --side:flex-end; --tilt:1.5deg; --mt:2.2rem; --d:.12s; --stamp-bg:#cfe1ee; --stamp-ink:#567f9b">
       <p class="script" style="font-size:1.6rem">save the date</p>
       <p class="date-serif">August 23</p>
       <p class="caps sm">at 12:00 PM</p>
       <hr class="rule" style="margin:1rem auto">
-      <p class="caps sm">Our Home<br>Congo Town<br>Back Road</p>
+      <p class="caps sm">Our Home<br>Congo Town, Back Road</p>
       <a class="maplink" href="https://www.google.com/maps/search/?api=1&query=778F%2BRW7+Monrovia%2C+Liberia" target="_blank" rel="noopener">open in maps ↗</a>
     </div>
 
+    <!-- RSVP opener — nestled right under save the date -->
+    <button class="card piece rsvp-piece reveal" id="rsvpOpen" style="--w:52%; --side:flex-start; --tilt:-1.8deg; --mt:-.6rem; --d:.14s" aria-haspopup="dialog">
+      <svg width="46" height="46" viewBox="0 0 60 60" aria-hidden="true">
+        <circle cx="30" cy="30" r="26" fill="#c9a24f"/>
+        <circle cx="30" cy="30" r="26" fill="none" stroke="#b48c3c" stroke-width="2" stroke-dasharray="3 4"/>
+        <path fill="#fdfaf2" d="M30 22c-3-4-11-3-11 4 0 5 6 9 11 13 5-4 11-8 11-13 0-7-8-8-11-4Z"/>
+      </svg>
+      <span class="rsvp-word">RSVP</span>
+      <span class="caps sm" style="color:var(--brown)">click here!</span>
+    </button>
+
     <!-- registry badge -->
-    <a class="badge piece reveal" style="--w:50%; --side:flex-start; --tilt:-2deg; --mt:2.4rem; --d:.15s" href="https://shorturl.at/RCu5r" target="_blank" rel="noopener" aria-label="Click for the registry — opens our Amazon registry">
+    <a class="badge piece reveal" style="--w:50%; --side:flex-end; --tilt:-2deg; --mt:2.6rem; --d:.15s" href="https://shorturl.at/RCu5r" target="_blank" rel="noopener" aria-label="Click for the registry — opens our Amazon registry">
       <svg viewBox="0 0 200 180" aria-hidden="true">
         <circle cx="46" cy="42" r="34" fill="#f2dfae"/>
         <circle cx="154" cy="42" r="34" fill="#f2dfae"/>
@@ -720,7 +751,7 @@
     </a>
 
   <!-- BOOKS FOR BABY -->
-    <div class="card piece reveal" style="--w:84%; --side:flex-end; --tilt:1.2deg; --mt:2.2rem">
+    <div class="card piece reveal" style="--w:84%; --side:flex-start; --tilt:1.2deg; --mt:2.2rem; --stamp-bg:#cfe1ee; --stamp-ink:#567f9b">
       <div class="banner" role="heading" aria-level="2" aria-label="Books for Baby">
         <span class="word" aria-hidden="true"><i>B</i><i>o</i><i>o</i><i>k</i><i>s</i></span>
         <span class="word" aria-hidden="true"><i>f</i><i>o</i><i>r</i></span>
@@ -747,17 +778,6 @@
       <p class="note" style="font-style:italic; margin-top:.8rem">Only if you'd like — new or gently loved, any story you love is perfect. 📖</p>
     </div>
 
-    <!-- RSVP opener -->
-    <button class="card piece rsvp-piece reveal" id="rsvpOpen" style="--w:56%; --side:flex-start; --tilt:-1.6deg; --mt:2.4rem" aria-haspopup="dialog">
-      <svg width="46" height="46" viewBox="0 0 60 60" aria-hidden="true">
-        <circle cx="30" cy="30" r="26" fill="#c9a24f"/>
-        <circle cx="30" cy="30" r="26" fill="none" stroke="#b48c3c" stroke-width="2" stroke-dasharray="3 4"/>
-        <path fill="#fdfaf2" d="M30 22c-3-4-11-3-11 4 0 5 6 9 11 13 5-4 11-8 11-13 0-7-8-8-11-4Z"/>
-      </svg>
-      <span class="rsvp-word">RSVP</span>
-      <span class="caps sm" style="color:var(--brown)">click here!</span>
-    </button>
-
     <!-- footer -->
     <div class="collage-footer reveal">
       <svg width="46" height="30" viewBox="0 0 46 30" aria-hidden="true">
@@ -767,7 +787,7 @@
       <span class="script" style="display:block; font-size:1.9rem; line-height:1.4">we can bearly wait to celebrate with you</span>
       <span>— with love, The Barry's —</span>
       <br>
-      <button class="back-to-env" id="backBtn">Return to Envelope</button>
+      <button class="back-to-env" id="backBtn">Seal the Envelope</button>
     </div>
 
   </div><!-- /collage -->
@@ -857,12 +877,12 @@
      ambient: a very soft royal music-box loop (~10s, C–Am–F–G)
      ============================================================ */
   let audioCtx = null, ambientGain = null, ambientTimer = null, muted = false;
-  const AMBIENT_LEVEL = .05;   // "very softly" — raise to taste (max 1)
+  const AMBIENT_LEVEL = .02;   // "very softly" — raise to taste (max 1)
 
   const getCtx = () => audioCtx || (audioCtx = new (window.AudioContext || window.webkitAudioContext)());
 
-  // one soft bell-like note into `dest`
-  function bell(freq, t, dur, peak, dest) {
+  // one soft bell-like note into `dest`; slow attack = dreamy swell, fast = sparkle
+  function bell(freq, t, dur, peak, dest, attack = .03, shimmerLvl = .1) {
     const c = getCtx();
     const osc = c.createOscillator();
     osc.type = 'sine';
@@ -872,10 +892,10 @@
     shimmer.frequency.value = freq * 2;
     const g = c.createGain();
     g.gain.setValueAtTime(0, t);
-    g.gain.linearRampToValueAtTime(peak, t + .03);
+    g.gain.linearRampToValueAtTime(peak, t + attack);
     g.gain.exponentialRampToValueAtTime(.0008, t + dur);
     const sg = c.createGain();
-    sg.gain.value = .1;
+    sg.gain.value = shimmerLvl;
     osc.connect(g); shimmer.connect(sg); sg.connect(g); g.connect(dest);
     osc.start(t); shimmer.start(t);
     osc.stop(t + dur + .1); shimmer.stop(t + dur + .1);
@@ -900,19 +920,24 @@
       ambientGain.gain.setValueAtTime(0, c.currentTime);
       ambientGain.gain.linearRampToValueAtTime(muted ? 0 : AMBIENT_LEVEL, c.currentTime + 4);
       ambientGain.connect(c.destination);
-      // four gentle arpeggiated chords, 2.5s each = 10s loop
+      // warm lowpass keeps it velvety — no pingy highs
+      const warmth = c.createBiquadFilter();
+      warmth.type = 'lowpass';
+      warmth.frequency.value = 1200;
+      warmth.connect(ambientGain);
+      // four dreamy arpeggiated chords an octave down, 2.5s each = 10s loop
       const CHORDS = [
-        { root: 261.63, arp: [523.25, 659.25, 783.99, 1046.50, 783.99, 659.25] }, // C
-        { root: 220.00, arp: [440.00, 523.25, 659.25,  880.00, 659.25, 523.25] }, // Am
-        { root: 174.61, arp: [349.23, 440.00, 523.25,  698.46, 523.25, 440.00] }, // F
-        { root: 196.00, arp: [392.00, 493.88, 587.33,  783.99, 587.33, 493.88] }, // G
+        { root: 130.81, arp: [261.63, 329.63, 392.00, 523.25, 392.00, 329.63] }, // C
+        { root: 110.00, arp: [220.00, 261.63, 329.63, 440.00, 329.63, 261.63] }, // Am
+        { root:  87.31, arp: [174.61, 220.00, 261.63, 349.23, 261.63, 220.00] }, // F
+        { root:  98.00, arp: [196.00, 246.94, 293.66, 392.00, 293.66, 246.94] }, // G
       ];
       const LOOP = 10;
       const schedule = (t0) => {
         CHORDS.forEach((ch, ci) => {
           const t = t0 + ci * 2.5;
-          bell(ch.root, t, 2.8, .5, ambientGain);
-          ch.arp.forEach((f, ni) => bell(f, t + .15 + ni * .38, 2.2, .35, ambientGain));
+          bell(ch.root, t, 3.2, .45, warmth, .3, .03);
+          ch.arp.forEach((f, ni) => bell(f, t + .2 + ni * .42, 3, .3, warmth, .22, .03));
         });
       };
       let next = c.currentTime + 1.2;
